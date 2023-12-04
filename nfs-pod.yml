@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: job-nginx
+spec:
+  volumes:
+    - name: nfs-test
+      persistentVolumeClaim:
+        claimName: test
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+      - mountPath: "/mnt"
+        name: nfs-test
+#   command:
+#   - bash
+#   - -c
+#   - "cp /mnt/usr/share/nginx/html/index.html /index.html"

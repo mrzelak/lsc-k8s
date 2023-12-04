@@ -1,0 +1,47 @@
+replicaCount: 1
+image:
+  repository: registry.k8s.io/sig-storage/nfs-provisioner
+  tag: v4.0.8
+  pullPolicy: IfNotPresent
+extraArgs: {}
+service:
+  type: ClusterIP
+  nfsPort: 2049
+  nlockmgrPort: 32803
+  mountdPort: 20048
+  rquotadPort: 875
+  rpcbindPort: 111
+  statdPort: 662
+  externalIPs: []
+persistence:
+  enabled: false
+  accessMode: ReadWriteOnce
+  size: 1Gi
+storageClass:
+  create: true
+  defaultClass: false
+  name: my-storageclassname
+  allowVolumeExpansion: true
+  parameters: {}
+  mountOptions:
+    - vers=3
+    - retrans=2
+    - timeo=30
+  reclaimPolicy: Delete
+rbac:
+  create: true
+  serviceAccountName: default
+securityContext:
+  capabilities:
+    add:
+      - DAC_READ_SEARCH
+      - SYS_RESOURCE
+priorityClass:
+  create: false
+  name: ""
+  value: 5
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+

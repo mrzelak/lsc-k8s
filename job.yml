@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-nginx
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: nfs-test
+          persistentVolumeClaim:
+            claimName: test
+      containers:
+      - name: bash
+        image: bash
+        volumeMounts:
+          - mountPath: "/mnt"
+            name: nfs-test
+        command:
+        - bash
+        - -c
+        - "cp /mnt/index.html /index.html"
